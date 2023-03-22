@@ -173,8 +173,7 @@ export default {
     },
 
     getHome() {
-      window.location.href = "http://dealerclick.test/admin/";
-      // this.$router.push("");
+      window.location.href = "/admin";
     },
 
     getRecoveryCodes() {
@@ -202,7 +201,6 @@ export default {
           this.$toasted.show(res.data.message, { type: "success" });
 
           this.getHome();
-          // this.getStatus();
         })
         .catch((err) => {
           this.$toasted.show(err.response.data.message, {

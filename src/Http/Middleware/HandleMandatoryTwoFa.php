@@ -24,6 +24,7 @@ class HandleMandatoryTwoFa
             'nova-vendor/nova-two-factor/register',
             'nova-vendor/nova-two-factor/status',
             'nova-vendor/nova-two-factor/toggle',
+            'nova-vendor/nova-notifications',
             'nova/logout',
             'admin/logout',
             'admin/nova-two-factor',
