@@ -14,8 +14,8 @@ class NovaTwoFactor extends Tool
      */
     public function boot()
     {
-        Nova::script('nova-two-factor', __DIR__.'/../dist/js/tool.js');
-        Nova::style('nova-two-factor', __DIR__.'/../dist/css/tool.css');
+        Nova::script('nova-two-factor', __DIR__ . '/../dist/js/tool.js');
+        Nova::style('nova-two-factor', __DIR__ . '/../dist/css/tool.css');
     }
 
     /**

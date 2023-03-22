@@ -2,10 +2,10 @@
 
 namespace Visanduma\NovaTwoFactor;
 
+use Laravel\Nova\Nova;
+use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Nova\Events\ServingNova;
-use Laravel\Nova\Nova;
 use Visanduma\NovaTwoFactor\Http\Middleware\Authorize;
 
 class ToolServiceProvider extends ServiceProvider
@@ -17,29 +17,36 @@ class ToolServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova-two-factor');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-two-factor');
 
-        Nova::style('price-tracker', __DIR__.'/../dist/css/tool.css');
+        Nova::style('price-tracker', __DIR__ . '/../dist/css/tool.css');
 
         $this->app->booted(function () {
             $this->routes();
         });
 
         if ($this->app->runningInConsole()) {
-
             $this->publishes([
                 __DIR__ . '/../config/nova-two-factor.php' => config_path('nova-two-factor.php'),
             ], 'nova-two-factor.config');
 
             $this->publishes([
-                __DIR__.'/../database/migrations/' => database_path('migrations')
+                __DIR__ . '/../database/migrations/' => database_path('migrations'),
             ], 'migrations');
         }
 
-
         Nova::serving(function (ServingNova $event) {
-            //
         });
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../config/nova-two-factor.php', 'nova-two-factor');
     }
 
     /**
@@ -54,18 +61,7 @@ class ToolServiceProvider extends ServiceProvider
         }
 
         Route::middleware(['nova', Authorize::class])
-                ->prefix('nova-vendor/nova-two-factor')
-                ->group(__DIR__.'/../routes/api.php');
-    }
-
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->mergeConfigFrom(__DIR__ . '/../config/nova-two-factor.php', 'nova-two-factor');
-
+            ->prefix('nova-vendor/nova-two-factor')
+            ->group(__DIR__ . '/../routes/api.php');
     }
 }
